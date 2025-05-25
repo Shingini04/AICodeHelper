@@ -6,7 +6,7 @@ import { dirname, join } from 'path';
 import explainerRoutes from './routes/explainerRoutes.js';
 
 // Initialize environment variables
-dotenv.config();
+dotenv.config({ path: '../.env' });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -34,4 +34,5 @@ if (process.env.NODE_ENV === 'production') {
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log('OpenRouter API Key:', process.env.OPENROUTER_API_KEY ? 'Present' : 'Missing');
 });
