@@ -2,9 +2,26 @@
 
 A web application that helps you understand code snippets with AI-powered explanations. Perfect for beginners learning to code!
 
+## New Features in v0.2.0! 🎉
+
+### 1. Multiple Explanation Modes
+- **Line by Line Analysis**: Get detailed explanations for each line of code
+- **Detailed Explanation**: Understand the intuition, approach, and complexity
+- **Quick Summary**: Get a 500-word overview for quick reference
+
+### 2. Mathematical Expression Support
+- Renders complex mathematical formulas and equations
+- Supports LaTeX syntax
+- Beautiful typography for mathematical symbols
+- Properly formatted tables and matrices
+
 ## Features
 
-- 📝 Paste any code snippet and get a detailed explanation
+- 📝 Multiple ways to understand code:
+  - Line-by-line detailed analysis
+  - Comprehensive explanation with intuition and approach
+  - Quick 500-word summary
+- 🧮 Support for mathematical expressions and formulas
 - 🧠 AI-powered analysis of your code
 - 🎨 Beautiful dark theme with syntax highlighting
 - 📱 Responsive design that works on all devices
@@ -46,16 +63,26 @@ A web application that helps you understand code snippets with AI-powered explan
    - Paste your code in the left panel
    - The code will automatically get syntax highlighting
 
-2. **Get Explanation**
-   - Click the "Explain Code" button
-   - Wait for the AI to analyze your code
-   - The explanation will appear in the right panel
+2. **Choose Explanation Type**
+   - **Line by Line**: Click "Explain Line by Line" for detailed per-line analysis
+   - **Explain Code**: Click "Explain Code" for comprehensive understanding
+   - **Quick Summary**: Click "Quick Summary" for a brief overview
 
-3. **Understanding the Explanation**
-   The explanation is broken down into three parts:
-   - **Intuition**: The basic idea behind the code
-   - **Approach**: Step-by-step breakdown of how it works
-   - **Complexity**: Time and space complexity analysis
+3. **Understanding Mathematical Expressions**
+   The app now supports various mathematical notations:
+   - LaTeX syntax for equations
+   - Matrices and tables
+   - Mathematical symbols and formulas
+   - Example: $E = mc^2$ or $\sum_{i=1}^n i^2$
+
+4. **Understanding the Explanation**
+   Different explanation types provide:
+   - **Line by Line**: Detailed breakdown of each code line
+   - **Detailed Explanation**:
+     - Intuition: The basic idea behind the code
+     - Approach: Step-by-step breakdown
+     - Complexity: Time and space analysis
+   - **Quick Summary**: 500-word overview for quick reference
 
 ## Troubleshooting
 
@@ -68,6 +95,11 @@ A web application that helps you understand code snippets with AI-powered explan
   npm run dev
   ```
 
+**Mathematical expressions aren't rendering**
+- Make sure you're using proper LaTeX syntax
+- Check if the expression is wrapped in `$` for inline or `$$` for block
+- Example: `$x^2 + y^2 = r^2$`
+
 **No explanation appears**
 - Without an API key, you'll see mock data
 - With an API key, check your `.env` file is correct
@@ -77,14 +109,19 @@ A web application that helps you understand code snippets with AI-powered explan
 
 ```
 ai-code-assistant/
-├── src/                    # Frontend React code
-│   ├── components/         # UI components
-│   ├── hooks/             # Custom React hooks
-│   └── types/             # TypeScript definitions
-├── server/                 # Backend Node.js code
-│   ├── controllers/       # Request handlers
-│   └── routes/           # API routes
-└── public/                # Static assets
+├── src/
+│   ├── components/
+│   │   ├── codeExplainer/
+│   │   │   ├── CodeInput.tsx       # Code input with multiple explanation buttons
+│   │   │   └── ExplanationOutput.tsx # Renders explanations with math support
+│   │   ├── layout/
+│   │   └── ui/
+│   ├── hooks/
+│   └── types/
+├── server/
+│   ├── controllers/
+│   └── routes/
+└── public/
 ```
 
 ## Available Scripts
@@ -94,20 +131,6 @@ ai-code-assistant/
 - `npm run server`: Start backend only
 - `npm run build`: Build for production
 - `npm run preview`: Preview production build
-
-## Features
-
-### Code Input
-- Syntax highlighting
-- Copy/paste support
-- Reset button
-- Auto-formatting
-
-### Explanation Output
-- Markdown rendering
-- Code block highlighting
-- Loading indicators
-- Error handling
 
 ## Contributing
 

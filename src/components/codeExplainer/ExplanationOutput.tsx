@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { CodeExplanation } from '../../types';
 import Spinner from '../ui/Spinner';
+import 'katex/dist/katex.min.css';
 
 interface ExplanationOutputProps {
   explanation: CodeExplanation | null;
@@ -12,7 +15,11 @@ interface ExplanationOutputProps {
 
 const ExplanationOutput: React.FC<ExplanationOutputProps> = ({ explanation, isLoading }) => {
   const markdownContent = explanation 
-    ? `# Intuition\n${explanation.intuition}\n\n# Approach\n${explanation.approach}\n\n# Complexity\n- Time complexity: ${explanation.timeComplexity}\n- Space complexity: ${explanation.spaceComplexity}`
+    ? explanation.type === 'lineByLine'
+      ? `# Line by Line Explanation\n${explanation.lineByLine}`
+      : explanation.type === 'summary'
+      ? `# Quick Summary\n${explanation.summary}`
+      : `# Intuition\n${explanation.intuition}\n\n# Approach\n${explanation.approach}\n\n# Complexity\n- Time complexity: ${explanation.timeComplexity}\n- Space complexity: ${explanation.spaceComplexity}`
     : '';
 
   return (
@@ -32,6 +39,8 @@ const ExplanationOutput: React.FC<ExplanationOutputProps> = ({ explanation, isLo
         ) : explanation ? (
           <div className="prose prose-invert max-w-none">
             <ReactMarkdown
+              remarkPlugins={[remarkMath]}
+              rehypePlugins={[rehypeKatex]}
               components={{
                 code({ node, inline, className, children, ...props }) {
                   const match = /language-(\w+)/.exec(className || '');
@@ -75,6 +84,23 @@ const ExplanationOutput: React.FC<ExplanationOutputProps> = ({ explanation, isLo
                     {children}
                   </li>
                 ),
+                table: ({ children }) => (
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-dark-600">
+                      {children}
+                    </table>
+                  </div>
+                ),
+                th: ({ children }) => (
+                  <th className="px-4 py-2 bg-dark-700 text-left text-sm font-semibold text-gray-300">
+                    {children}
+                  </th>
+                ),
+                td: ({ children }) => (
+                  <td className="px-4 py-2 text-sm text-gray-300 border-t border-dark-600">
+                    {children}
+                  </td>
+                ),
               }}
             >
               {markdownContent}
@@ -84,7 +110,7 @@ const ExplanationOutput: React.FC<ExplanationOutputProps> = ({ explanation, isLo
           <div className="flex items-center justify-center h-full text-center text-gray-500">
             <div>
               <p className="mb-2">Submit your code to get an explanation</p>
-              <p className="text-xs">The AI will analyze your code and provide a detailed explanation</p>
+              <p className="text-xs">Choose an explanation type to analyze your code</p>
             </div>
           </div>
         )}

@@ -5,7 +5,7 @@ import { Copy, RefreshCw } from 'lucide-react';
 interface CodeInputProps {
   code: string;
   setCode: (code: string) => void;
-  onSubmit: () => void;
+  onSubmit: (type: 'detailed' | 'lineByLine' | 'summary') => void;
   isLoading: boolean;
 }
 
@@ -59,14 +59,32 @@ const CodeInput: React.FC<CodeInputProps> = ({ code, setCode, onSubmit, isLoadin
           spellCheck="false"
         />
       </div>
-      <div className="px-4 py-3 border-t border-dark-600">
+      <div className="px-4 py-3 border-t border-dark-600 space-y-2">
         <Button
-          onClick={onSubmit}
+          onClick={() => onSubmit('lineByLine')}
+          disabled={!code.trim()}
+          isLoading={isLoading}
+          className="w-full mb-2"
+        >
+          Explain Line by Line
+        </Button>
+        <Button
+          onClick={() => onSubmit('detailed')}
+          disabled={!code.trim()}
+          isLoading={isLoading}
+          className="w-full mb-2"
+          variant="secondary"
+        >
+          Explain Code
+        </Button>
+        <Button
+          onClick={() => onSubmit('summary')}
           disabled={!code.trim()}
           isLoading={isLoading}
           className="w-full"
+          variant="outline"
         >
-          Explain Code
+          Quick Summary
         </Button>
       </div>
     </div>
