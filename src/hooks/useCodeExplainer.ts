@@ -7,12 +7,12 @@ export const useCodeExplainer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const explainCode = async (code: string) => {
+  const explainCode = async (code: string, type: 'detailed' | 'lineByLine' | 'summary' = 'detailed') => {
     setIsLoading(true);
     setError(null);
     
     try {
-      const response = await axios.post('/api/explain', { code });
+      const response = await axios.post('/api/explain', { code, type });
       setExplanation(response.data);
     } catch (err) {
       setError('Failed to get explanation. Please try again.');

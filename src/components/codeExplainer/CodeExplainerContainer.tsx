@@ -8,9 +8,9 @@ const CodeExplainerContainer: React.FC = () => {
   const [code, setCode] = useState('');
   const { explanation, isLoading, explainCode } = useCodeExplainer();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (type: 'detailed' | 'lineByLine' | 'summary') => {
     if (code.trim()) {
-      await explainCode(code);
+      await explainCode(code, type);
     }
   };
 
